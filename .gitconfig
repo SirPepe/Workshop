@@ -1,0 +1,5 @@
+[user]
+	name = ***
+	email = ***@tns-infratest.com
+[http]
+    proxy = http://10.11.32.184:8080
