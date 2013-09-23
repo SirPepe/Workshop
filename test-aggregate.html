@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>Test-Seite</title>
+<script>
+var require = { 
+  paths: {
+          requirejs: 'bower_components/requirejs/require',
+          jquery: 'bower_components/jquery/jquery'
+        }
+      };
+
+</script>
+<script src="bower_components/requirejs/require.js"></script>
+</head>
+<body>
+<script>
+require(["src/widgets/AggregateWidget/AggregateWidget"], function(AggregateWidget){
+  var test = new AggregateWidget();
+});
+</script>
+</body>
+</html>
