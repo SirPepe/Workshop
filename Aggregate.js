@@ -48,6 +48,7 @@ define(["jquery", "underscore"], function($) {
             $.each(answers, function(key, val) {
               result.data[key] = 0;
             });
+            result.data[null] = 0;
 
             //count respondent answers
             $.each(data, function(key, val) {
