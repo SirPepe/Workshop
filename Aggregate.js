@@ -73,6 +73,29 @@ define(["jquery", "underscore"], function($) {
               });
             });
             break;
+          case "Grid":
+            var questionVars = _.keys(data[0]).filter(function(keyname) { //get only those interesting for q
+              return keyname.indexOf(q + "_") === 0;
+            });
+
+            //build each answer in result and set it to 0
+            $.each(questionVars, function(key, qid) {
+              $.each(answers, function(key, val) {
+                if(typeof result.data[qid] === "undefined") result.data[qid] = {};
+                result.data[qid][key] = 0;
+              });
+              result.data[qid][null] = 0; //also count nulls in Grids
+            });
+            
+            //count respondent answers
+            $.each(data, function(key, response) { //for each response
+              $.each(questionVars, function(id, v) { //for each question in response
+                result.data[v][response[v]]++;
+              });
+            });
+            break;
+          case "Numeric":
+            break;
           default:
         }
 
