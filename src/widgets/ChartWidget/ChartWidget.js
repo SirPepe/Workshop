@@ -1,5 +1,5 @@
 // ChartModul: Torte - basiert auf http://www.chartjs.org/
-define(['jquery', 'chart'], function($){ // fuer 'chart' kein parameter weil kein AMD Modul Chart ist global!
+define(['jquery', 'chart', 'lib/aggregate'], function($,_chart,aggregate){ // fuer '_chart' kein parameter weil kein AMD Modul Chart ist global! , fuer dropdown button: '../../../bower_components/bootstrap/js/dropdown'
 
   'use strict';
   
@@ -22,6 +22,12 @@ define(['jquery', 'chart'], function($){ // fuer 'chart' kein parameter weil kei
   $(target).append($canvas);
   
   var ctx = $canvas.get(0).getContext("2d");
+
+  // Test von Oliver
+
+  aggregate.getByQid("Q1", function(data) {
+    console.log(data);
+  });
 
   
 var data = {
@@ -118,8 +124,38 @@ var defaults = {
 
 
   new Chart(ctx).Bar(data,defaults);
-  
-  
+ /* Idee fuer DropDown Button:
+  // Private Modul-Funktion. Da das Modul nur die Constructor-Funktion
+  // "ButtonWidget" an die Außenwelt weitergibt, bleibt die Button-Erstellung
+  // selbst verborgen und privat.
+  var createButton = function(){
+    var button = $('<button/>').attr({
+      type: 'button',
+      class: 'btn btn-default dropdown-toggle',
+      value: 'Change!',
+      "data-toggle": 'dropdown'
+    });
+    var ul = $('<ul/>').attr({
+    class: 'dropdown-menu',
+    role: 'menu'
+    });
+    
+    //var li = '<li><a href="#">AAAA</a></li> <li><a href="#">BBBB</a></li>';
+
+  };
+
+  //Button
+    // Tipp: Variablen mit jQuery-Objekten darin mit $ kennzeichnen
+    var $button = createButton();
+
+    // Erzeugten Button in das Ziel-Element einhängen
+    $button.appendTo(target);
+
+    // Beim Klick auf den Button ein "hallo"-Event triggern
+    //$button.click(function(){
+    //  window.APP.mediator.trigger('hallo');
+    //});
+*/
   
   
   
