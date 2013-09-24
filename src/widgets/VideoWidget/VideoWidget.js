@@ -3,10 +3,6 @@ define(['jquery'], function($){
 
   'use strict';
 
-  $('main').append('<section class="videoPlayer"></section>');
-  $('.videoPlayer').html('<video controls autoplay><source src="http://cdn.tns-global.com/multimedia/DE/bi/test/Ad1_Kia_Sportage.mp4" id="v1">Video herunterladen</video>');
-  
-
   // Private Modul-Funktion. Da das Modul nur die Constructor-Funktion
   // "ButtonWidget" an die Außenwelt weitergibt, bleibt die Button-Erstellung
   // selbst verborgen und privat.
@@ -19,7 +15,9 @@ define(['jquery'], function($){
 
   
   // Die übliche Modul-Constructor-Funktion
-  return function ButtonWidget(target){
+  return function VideoWidget (target){
+
+  $(target).append('<section class="videoPlayer"></section>').html('<video controls autoplay><source src="http://cdn.tns-global.com/multimedia/DE/bi/test/Ad1_Kia_Sportage.mp4" id="v1">Video herunterladen</video>');
 
     // Tipp: Variablen mit jQuery-Objekten darin mit $ kennzeichnen
 
@@ -29,8 +27,8 @@ define(['jquery'], function($){
     $dislikebutton.addClass('dislikeVideo').val('Dislike');
     
     // Erzeugten Button in das Ziel-Element einhängen
-    $likebutton.appendTo(".videoPlayer");
-    $dislikebutton.appendTo(".videoPlayer");
+    $likebutton.appendTo(target);
+    $dislikebutton.appendTo(target);
 
     // Beim Klick auf den Button ein "hallo"-Event triggern
     $likebutton.click(function(){
