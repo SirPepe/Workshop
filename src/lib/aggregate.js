@@ -41,7 +41,8 @@ define(["jquery", "underscore"], function($) {
         result.title = meta.title;
         result.text = meta.text;
         result.data = {};
-
+        var questionVars;
+        
         switch(meta.type) {
           case "Single":
             //set each answer to 0
@@ -62,7 +63,7 @@ define(["jquery", "underscore"], function($) {
             });
 
             //get questions variables for this question
-            var questionVars = _.keys(data[0]).filter(function(keyname) { //get only those interesting for q
+            questionVars = _.keys(data[0]).filter(function(keyname) { //get only those interesting for q
               return keyname.indexOf(q + "_") === 0;
             });
             
@@ -74,7 +75,7 @@ define(["jquery", "underscore"], function($) {
             });
             break;
           case "Grid":
-            var questionVars = _.keys(data[0]).filter(function(keyname) { //get only those interesting for q
+            questionVars = _.keys(data[0]).filter(function(keyname) { //get only those interesting for q
               return keyname.indexOf(q + "_") === 0;
             });
 
