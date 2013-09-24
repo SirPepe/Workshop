@@ -5,7 +5,8 @@ require([
   'jquery',
   'lib/Mediator',
   'lib/LoadWidget',
-  'widgets/ChartWidget/ChartWidget'
+  'widgets/ChartWidget/ChartWidget',
+  'widgets/TextWidget/TextWidget'
 ], function(_require, $, Mediator, loadWidget){
 
   'use strict';

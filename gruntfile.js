@@ -66,7 +66,8 @@ grunt.initConfig({
         paths: {
           requirejs: '../bower_components/requirejs/require',
           jquery: '../bower_components/jquery/jquery',
-          chart: '../bower_components/nnnick-chartjs/Chart.min'
+          chart: '../bower_components/nnnick-chartjs/Chart.min',
+          text: '../bower_components/requirejs-text/text'
         },
         name: 'ausgabe',
         out: 'app/ausgabe.js',
