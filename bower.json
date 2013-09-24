@@ -6,6 +6,7 @@
     "requirejs": "2.1.x",
     "bootstrap": "3.0.x",
     "nnnick-chartjs": "*",
-    "underscore": "1.5.x"
+    "underscore": "1.5.x",
+    "requirejs-text": "~2.0.10"
   }
 }

@@ -27,10 +27,19 @@ grunt.initConfig({
           siteTitle: 'Workshop-App'
         }
       },
-      files: {
+      files: (function(){
+        var files = {
         'app/fragebogen.html': 'src/fragebogen.jade',
 		'app/ausgabe.html': 'src/ausgabe.jade'
-      }
+      };
+        var pattern = 'src/widgets/**/*.jade';
+        var jadeFiles = grunt.file.expand(pattern);
+        jadeFiles.forEach(function(file){
+          var output = file.replace('.jade', '.html');
+          files[output] = file;
+        });
+        return files;
+      })()
     }
   },
 
@@ -43,7 +52,8 @@ grunt.initConfig({
         baseUrl: 'src',
         paths: {
           requirejs: '../bower_components/requirejs/require',
-          jquery: '../bower_components/jquery/jquery'
+          jquery: '../bower_components/jquery/jquery',
+          text: '../bower_components/requirejs-text/text'
         },
         name: 'fragebogen',
         out: 'app/fragebogen.js',
@@ -63,7 +73,9 @@ grunt.initConfig({
         optimize: 'none'
       }
     }
-  }
+  },
+  
+  clean: ['src/widgets/**/*.html']
 
 });
 
@@ -73,7 +85,7 @@ grunt.loadNpmTasks('grunt-contrib');
 
 // Diese Abfolge an Tasks wird bei einem normalen Aufruf von "grunt"
 // abgearbeitet
-grunt.registerTask('default', [ 'jshint', 'jade', 'requirejs' ]);
+grunt.registerTask('default', [ 'jshint', 'jade', 'requirejs', 'clean']);
 
 //
 
