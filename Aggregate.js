@@ -59,13 +59,14 @@ define(["jquery", "underscore"], function($) {
             $.each(answers, function(key, val) {
               result.data[q + "_" + key] = 0;
             });
+
+            //get questions variables for this question
+            var questionVars = _.keys(data[0]).filter(function(keyname) { //get only those interesting for q
+              return keyname.indexOf(q + "_") === 0;
+            });
             
             //count respondent answers
             $.each(data, function(key, response) { //for each response
-              var questionVars = _.keys(response).filter(function(keyname) { //get only those interesting for q
-                return keyname.indexOf(q + "_") === 0;
-              });
-              
               $.each(questionVars, function(id, v) { //for each question in response
                 if(response[v]) result.data[v]++;
               });
