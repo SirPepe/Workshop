@@ -50,11 +50,7 @@ grunt.initConfig({
     index1: {
       options: {
         baseUrl: 'src',
-        paths: {
-          requirejs: '../bower_components/requirejs/require',
-          jquery: '../bower_components/jquery/jquery',
-          text: '../bower_components/requirejs-text/text'
-        },
+        paths: require('./gruntconfig.js').paths,
         name: 'fragebogen',
         out: 'app/fragebogen.js',
         optimize: 'none'
@@ -63,12 +59,7 @@ grunt.initConfig({
 	index2: {
       options: {
         baseUrl: 'src',
-        paths: {
-          requirejs: '../bower_components/requirejs/require',
-          jquery: '../bower_components/jquery/jquery',
-          chart: '../bower_components/nnnick-chartjs/Chart.min',
-          text: '../bower_components/requirejs-text/text'
-        },
+        paths: require('./gruntconfig.js').paths,
         name: 'ausgabe',
         out: 'app/ausgabe.js',
         optimize: 'none'
