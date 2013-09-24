@@ -1,12 +1,10 @@
-// Beispiel-Modul mit jQuery als Dependency
-define(['jquery', 'chart'], function($){ // Peter wegen fehlendem chart fragen!!!
+// ChartModul: Torte - basiert auf http://www.chartjs.org/
+define(['jquery', 'chart'], function($){ // fuer 'chart' kein parameter weil kein AMD Modul Chart ist global!
 
   'use strict';
   
   
-  // Private Modul-Funktion. Da das Modul nur die Constructor-Funktion
-  // "ButtonWidget" an die Außenwelt weitergibt, bleibt die Button-Erstellung
-  // selbst verborgen und privat.
+  // Erzeugt Funktion createCanvas,
   var createCanvas = function(){
     return $('<canvas/>').attr({
       width: 400,
@@ -23,10 +21,8 @@ define(['jquery', 'chart'], function($){ // Peter wegen fehlendem chart fragen!!
   var $canvas = createCanvas();
   $(target).append($canvas);
   
-  //Get context with jQuery - using jQuery's .get() method.
   var ctx = $canvas.get(0).getContext("2d");
-  //This will get the first returned node in the jQuery collection.
-  var myNewChart = new Chart(ctx);
+
   
   var data =  [
 	{
