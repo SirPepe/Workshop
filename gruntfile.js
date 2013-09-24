@@ -28,7 +28,8 @@ grunt.initConfig({
         }
       },
       files: {
-        'app/index.html': 'src/index.jade'
+        'app/fragebogen.html': 'src/fragebogen.jade',
+		'app/ausgabe.html': 'src/ausgabe.jade'
       }
     }
   },
@@ -37,15 +38,28 @@ grunt.initConfig({
   // installierte Komponenten im path angegeben werden sollten, damit die
   // Verwendung etwas einfacher wird.
   requirejs: {
-    all: {
+    index1: {
       options: {
         baseUrl: 'src',
         paths: {
           requirejs: '../bower_components/requirejs/require',
           jquery: '../bower_components/jquery/jquery'
         },
-        name: 'main',
-        out: 'app/main.js',
+        name: 'fragebogen',
+        out: 'app/fragebogen.js',
+        optimize: 'none'
+      }
+    },
+	index2: {
+      options: {
+        baseUrl: 'src',
+        paths: {
+          requirejs: '../bower_components/requirejs/require',
+          jquery: '../bower_components/jquery/jquery',
+          chart: '../bower_components/nnnick-chartjs/Chart.min'
+        },
+        name: 'ausgabe',
+        out: 'app/ausgabe.js',
         optimize: 'none'
       }
     }

@@ -5,8 +5,9 @@ require([
   'jquery',
   'lib/Mediator',
   'widgets/HeartbeatWidget/HeartbeatWidget',
-  'widgets/ButtonWidget/ButtonWidget'
-], function(_require, $, Mediator, HeartbeatWidget, ButtonWidget){
+  'widgets/ButtonWidget/ButtonWidget',
+  'widgets/ChartWidget/ChartWidget'
+], function(_require, $, Mediator, HeartbeatWidget, ButtonWidget,ChartWidget){
 
   'use strict';
 
@@ -22,7 +23,7 @@ require([
   $main = $('main');
 
   // Jedes Widget ist ein Mini-Programm und muss einzeln initialisiert werden
-  [HeartbeatWidget, ButtonWidget].forEach(function(Widget){
+  [HeartbeatWidget,ChartWidget].forEach(function(Widget){
 
     // Jedes Widget bekommt einen eigenen Container
     var $widgetContainer = $('<section>')
