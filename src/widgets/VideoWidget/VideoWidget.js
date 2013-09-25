@@ -12,6 +12,8 @@ define(['jquery'], function($){
       class: 'btn btn-primary',
     });
   };
+
+
 //Zeit der clicks holen
      var getVideoTime = function(target){
        var $mediaElement = $(target).find('video');
@@ -28,19 +30,20 @@ define(['jquery'], function($){
     var context = canvas.getContext('2d');
     $video.attr('crossOrigin','Anonymous');
     
-    canvas.width = $video.get(0).videoWidth;
-    canvas.height = $video.get(0).videoHeight;                                      
-    context.drawImage($video.get(0), 0, 0, $video.get(0).videoWidth, $video.get(0).videoHeight);
-    
+    canvas.width = $video.get(0).videoWidth/4;
+    canvas.height = $video.get(0).videoHeight/4;                                      
+    context.drawImage($video.get(0), 0, 0, $video.get(0).videoWidth/4, $video.get(0).videoHeight/4);
+    $canvas.css('display','none');
     
      var img = canvas.toDataURL("image/png");
     var bild ='<img src="'+img+'"/>';
+    return bild;
      };
 
 
   // Die übliche Modul-Constructor-Funktion
   return function VideoWidget (target){
-  $(target).html('<div class="videoPlayer"><video controls autoplay><source src="http://cdn.tns-global.com/multimedia/DE/bi/test/Ad1_Kia_Sportage.mp4" id="v1">Video herunterladen</video></div><canvas id="canvas"></canvas></canvas>');
+  $(target).html('<div class="videoPlayer"><video controls autoplay><source src="Ad1_Kia_Sportage.mp4" id="v1">Video herunterladen</video></div><canvas id="canvas"></canvas><div class="snapshotcontainer"></div>');
     // Tipp: Variablen mit jQuery-Objekten darin mit $ kennzeichnen
     var $v1 = $(target).find('video');
     var v1 = $(target).find('video').get(0);
@@ -60,23 +63,30 @@ v1.onplay = function () {
     // Beim Klick auf den Button ein "hallo"-Event triggern
     $(target).each(function(){
         $likebutton.click(function(index){
-        videoObject=({"videoObject.wert": "1", "videoObject.sntime": getVideoTime(target)});
-        videoObjectSum.push(videoObject);
         var snap=getSnapShot(target);
+        videoObject = { wert: "1", sntime: getVideoTime(target), screenshot: snap};
+        videoObjectSum.push(videoObject);
+        $(target).find(".snapshotcontainer").append(snap);
     });
     $dislikebutton.click(function(index){
-        var tg=getVideoTime(target);
-        videoObject=({"videoObject.wert": "2", "videoObject.sntime": getVideoTime(target)});
-        videoObjectSum.push(videoObject);
         var snap=getSnapShot(target);
+        videoObject = { wert: "2", sntime: getVideoTime(target), screenshot: snap};
+        videoObjectSum.push(videoObject);
+        $(target).find(".snapshotcontainer").append(snap);
     });
     });
 };
 
+
+window.APP.mediator.on("pofalla", function(){
+      window.APP.mediator.trigger(videoObjectSum);
+      $(target).remove();
+    });
+
+
+
      $v1.bind("ended", function() {
-     var json=JSON.stringify(videoObjectSum);
-     //alert(json);
-      window.APP.mediator.trigger(json);
+      window.APP.mediator.trigger(videoObjectSum);
 });
   };
 
