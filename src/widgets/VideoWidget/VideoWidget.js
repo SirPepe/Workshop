@@ -26,10 +26,16 @@ define(['jquery'], function($){
     var canvas = $canvas.get(0);
     // Get a handle on the 2d context of the canvas element
     var context = canvas.getContext('2d');
+    $video.attr('crossOrigin','Anonymous');
+    
     canvas.width = $video.get(0).videoWidth;
     canvas.height = $video.get(0).videoHeight;                                      
     context.drawImage($video.get(0), 0, 0, $video.get(0).videoWidth, $video.get(0).videoHeight);
-    };
+    
+    
+     var img = canvas.toDataURL("image/png");
+    var bild ='<img src="'+img+'"/>';
+     };
 
 
   // Die übliche Modul-Constructor-Funktion
