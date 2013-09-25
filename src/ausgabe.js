@@ -27,11 +27,7 @@ require([
     return pages.seite1; 
   }
   
- 
   
-  //var b = pageLoader(pages);
-  //alert(b);
-
   // Globalen App-Namespace initialisieren. Alle globalen Variablen werden, wenn
   // sie denn nötig sind, hier platziert.
   window.APP = window.APP || {};
@@ -46,22 +42,11 @@ require([
   // Jedes Widget ist ein Mini-Programm und muss einzeln initialisiert werden
   var loadWidgetsInMain = loadWidget.bind(null, $main);
   
-  
-  //[].slice.call(arguments, 5).forEach(loadWidgetsInMain);
-  //pageLoader(pages).forEach(loadWidgetsInMain);
-  
-  //window.addEventListener('hashchange', function(){
-  //  alert('EventListener' + window.location.hash);
-  //  pageLoader(pages).forEach(loadWidgetsInMain);
-  //}, false);
-  
   var init = function(){
+    window.APP.mediator.trigger('pofalla');
     pageLoader(pages).forEach(loadWidgetsInMain);
   };
   $(window).on('hashchange', init);
   $(document).ready(init);
   
-  
-  
-
 });

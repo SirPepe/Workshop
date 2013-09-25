@@ -5,11 +5,29 @@ require([
   'jquery',
   'lib/Mediator',
   'lib/LoadWidget',
-  'widgets/VideoWidget/VideoWidget'
-], function(_require, $, Mediator, loadWidget){
+  'widgets/VideoWidget/VideoWidget',
+  'widgets/TextWidget/TextWidget'
+], function(_require, $, Mediator, loadWidget,
+  VideoWidget,
+  TextWidget
+){
 
   'use strict';
+  
+  var pages = {
+    seite1: [VideoWidget],
+    seite2: [TextWidget]
+  };
+  
+  
+  
+  function pageLoader(pages){  
+    var page = window.location.hash.substring(1);
+    if (pages.hasOwnProperty(page)) return pages[page];
+    return pages.seite1; 
+  }
 
+  
   // Globalen App-Namespace initialisieren. Alle globalen Variablen werden, wenn
   // sie denn nötig sind, hier platziert.
   window.APP = window.APP || {};
@@ -23,6 +41,12 @@ require([
  
   // Jedes Widget ist ein Mini-Programm und muss einzeln initialisiert werden
   var loadWidgetsInMain = loadWidget.bind(null, $main);
-  [].slice.call(arguments, 4).forEach(loadWidgetsInMain);
+  
+  var init = function(){
+    window.APP.mediator.trigger('pofalla');
+    pageLoader(pages).forEach(loadWidgetsInMain);
+  };
+  $(window).on('hashchange', init);
+  $(document).ready(init);
 
 });
