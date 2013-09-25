@@ -1,5 +1,5 @@
 // ChartWidget
-define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart'], function($,_chart,aggregate, ColumnChart){ // fuer '_chart' kein parameter weil kein AMD Modul Chart ist global! , fuer dropdown button: '../../../bower_components/bootstrap/js/dropdown'
+define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 'lib/PieChart'], function($,_chart,aggregate,ColumnChart,LineChart,PieChart){ // fuer '_chart' kein parameter weil kein AMD Modul Chart ist global! , fuer dropdown button: '../../../bower_components/bootstrap/js/dropdown'
 
   'use strict';
   
@@ -52,7 +52,7 @@ var data = {
 	]
 };
 
-new ColumnChart(target, data);  
+new PieChart(target, data);  
   
   
      // Tipp: Variablen mit jQuery-Objekten darin mit $ kennzeichnen
@@ -69,11 +69,11 @@ new ColumnChart(target, data);
   
   }); // Ende Datenanfrage
   
-  
-
- 
-  
-  
+//Pofalla beendet Target
+  window.APP.mediator.on("pofalla", function listener(){
+  $(target).remove();
+  window.APP.mediator.off("pofalla", listener);
+   });
   
 
   }; // Ende Constructor

@@ -1,4 +1,4 @@
-﻿// ChartModul: Saeulen - basiert auf http://www.chartjs.org/
+﻿// ChartModul: LineChat - basiert auf http://www.chartjs.org/
 define(['jquery', 'chart','underscore'], function($){
 
   'use strict';
@@ -11,13 +11,13 @@ define(['jquery', 'chart','underscore'], function($){
     });
   }; // ENDE createCanvas
   
-  return function ColumnChart(target, data){ // Ziel wohin und mit was
+  return function LineChart(target, data){ // Ziel wohin und mit was
     var $canvas = createCanvas();
     $(target).append($canvas);
     var ctx = $canvas.get(0).getContext("2d");
     console.log(data);
     
-    //ColumnChart DefaultSettings
+    //LineChart DefaultSettings
 var defaults = {
 				
 	//Boolean - If we show the scale above the chart data			
@@ -50,7 +50,7 @@ var defaults = {
 	scaleFontFamily : "'Arial'",
 	
 	//Number - Scale label font size in pixels	
-	scaleFontSize : 10,
+	scaleFontSize : 12,
 	
 	//String - Scale label font weight style	
 	scaleFontStyle : "normal",
@@ -66,18 +66,27 @@ var defaults = {
 	
 	//Number - Width of the grid lines
 	scaleGridLineWidth : 1,	
-
-	//Boolean - If there is a stroke on each bar	
-	barShowStroke : true,
 	
-	//Number - Pixel width of the bar stroke	
-	barStrokeWidth : 2,
+	//Boolean - Whether the line is curved between points
+	bezierCurve : true,
 	
-	//Number - Spacing between each of the X value sets
-	barValueSpacing : 5,
+	//Boolean - Whether to show a dot for each point
+	pointDot : true,
 	
-	//Number - Spacing between data sets within X values
-	barDatasetSpacing : 1,
+	//Number - Radius of each point dot in pixels
+	pointDotRadius : 3,
+	
+	//Number - Pixel width of point dot stroke
+	pointDotStrokeWidth : 1,
+	
+	//Boolean - Whether to show a stroke for datasets
+	datasetStroke : true,
+	
+	//Number - Pixel width of dataset stroke
+	datasetStrokeWidth : 2,
+	
+	//Boolean - Whether to fill the dataset with a colour
+	datasetFill : true,
 	
 	//Boolean - Whether to animate the chart
 	animation : true,
@@ -94,7 +103,7 @@ var defaults = {
 };
 
 
-  new Chart(ctx).Bar(data,defaults); // Chart zeichnen
+  new Chart(ctx).Line(data,defaults); // Chart zeichnen
   
   };
   
