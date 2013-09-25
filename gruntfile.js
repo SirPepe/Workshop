@@ -66,8 +66,36 @@ grunt.initConfig({
       }
     }
   },
-  
-  clean: ['src/widgets/**/*.html']
+
+  stylus: {
+    compile: {
+      options: {
+        //
+      },
+      files: (function() {
+        var files = {};
+        var pattern = 'src/widgets/**/*.styl';
+        var stylusFiles = grunt.file.expand(pattern);
+        stylusFiles.forEach(function(file){
+          var output = file.replace('.styl', '.css');
+          files[output] = file;
+        });
+        return files;
+      })()
+    }
+  },
+
+  concat: {
+    options: {
+      separator: '',
+    },
+    dist: {
+      src: ['src/widgets/**/*.css'],
+      dest: 'app/main.css'
+    },
+  },
+
+  clean: ['src/widgets/**/*.html', 'src/widgets/**/*.css']
 
 });
 
