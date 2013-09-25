@@ -44,6 +44,20 @@ define(['jquery'], function($){
   // Die übliche Modul-Constructor-Funktion
   return function VideoWidget (target){
   $(target).html('<div class="videoPlayer"><video controls autoplay><source src="Ad1_Kia_Sportage.mp4" id="v1">Video herunterladen</video></div><canvas id="canvas"></canvas><div class="snapshotcontainer"></div>');
+    $(target).find('.snapshotcontainer').append("<div class='greenlike'></div>");
+    $(target).find('.snapshotcontainer').append("<div class='reddislike'></div>");
+    $(target).find('.greenlike').css({
+      'background-color':'green',
+      'min-width':'350px',
+      'max-width':'350px',
+      'float':'left'
+    });
+    $(target).find('.reddislike').css({
+      'background-color':'red',
+      'min-width':'350px',
+      'max-width':'350px',
+      'float':'left'
+    });
     // Tipp: Variablen mit jQuery-Objekten darin mit $ kennzeichnen
     var $v1 = $(target).find('video');
     var v1 = $(target).find('video').get(0);
@@ -53,8 +67,9 @@ define(['jquery'], function($){
     $dislikebutton.addClass('dislikeVideo').val('Dislike');
     
     // Erzeugten Button in das Ziel-Element einhängen
-    $likebutton.appendTo(target);
-    $dislikebutton.appendTo(target);
+    var $vPlayer = $(target).find('.videoPlayer');    
+    $likebutton.appendTo($vPlayer);
+    $dislikebutton.appendTo($vPlayer);
     var help=[];
     var videoObject = {};
      var videoObjectSum = [];
@@ -66,26 +81,30 @@ v1.onplay = function () {
         var snap=getSnapShot(target);
         videoObject = { wert: "1", sntime: getVideoTime(target), screenshot: snap};
         videoObjectSum.push(videoObject);
-        $(target).find(".snapshotcontainer").append(snap);
+        $(target).find(".greenlike").append(snap);
     });
     $dislikebutton.click(function(index){
         var snap=getSnapShot(target);
         videoObject = { wert: "2", sntime: getVideoTime(target), screenshot: snap};
         videoObjectSum.push(videoObject);
-        $(target).find(".snapshotcontainer").append(snap);
+        $(target).find(".reddislike").append(snap);
     });
     });
 };
 
 
-window.APP.mediator.on("pofalla", function(){
+window.APP.mediator.on("pofalla", function listener(){
       window.APP.mediator.trigger(videoObjectSum);
       $(target).remove();
+      window.APP.mediator.off('pofalla', listener);
     });
 
 
 
      $v1.bind("ended", function() {
+      $(target).find('.videoPlayer').hide( 2000 , function (){
+        $(this).remove();
+      });
       window.APP.mediator.trigger(videoObjectSum);
 });
   };
