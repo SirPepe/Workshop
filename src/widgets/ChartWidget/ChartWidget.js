@@ -1,5 +1,5 @@
-// ChartModul: Torte - basiert auf http://www.chartjs.org/
-define(['jquery', 'chart', 'lib/aggregate'], function($,_chart,aggregate){ // fuer '_chart' kein parameter weil kein AMD Modul Chart ist global! , fuer dropdown button: '../../../bower_components/bootstrap/js/dropdown'
+// ChartWidget
+define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart'], function($,_chart,aggregate, ColumnChart){ // fuer '_chart' kein parameter weil kein AMD Modul Chart ist global! , fuer dropdown button: '../../../bower_components/bootstrap/js/dropdown'
 
   'use strict';
   
@@ -7,159 +7,75 @@ define(['jquery', 'chart', 'lib/aggregate'], function($,_chart,aggregate){ // fu
   // Erzeugt Funktion createCanvas,
   var createCanvas = function(){
     return $('<canvas/>').attr({
-      width: 400,
+      width: 600,
       height: 400,
       id: 'myChart'
     });
   };
-
-  // Jedes Modul gibt eine Constructorfunktion zurück. Das Ist eine der
-  // KERNKONVENTIONEN der App. Die Funktion erwartet IMMER ein DOM-Element, das
-  // das Widget als Zielcontainer für das eigene Sub-DOM nutzen kann
-  return function ChartWidget(target){
-
-  var $canvas = createCanvas();
-  $(target).append($canvas);
   
-  var ctx = $canvas.get(0).getContext("2d");
+    var createButton = function(){
+    return $('<input/>').attr({
+      type: 'button',
+      class: 'btn btn-primary',
+      value: 'Hallo!'
+    });
+  };
+  
+  return function ChartWidget(target){ //ConstructorFn
 
-  // Test von Oliver
+  // DATEN VON OLIVER
 
-  aggregate.getByQid("Q1", function(data) {
-    console.log(data);
-  });
-
+  aggregate.getByQid("Q3", function(oliverdata) {
+    console.log(oliverdata);
+    delete oliverdata.data.null; // löscht die "null" aus den Dateneinträgen 
+    var dataInArray =_.values(oliverdata.data); // Daten data (values) aus Object (oliverdata) in Array schreiben
+    var answersInArray =_.values(oliverdata.answers); // Daten answers (values) aus Object (oliverdata) in Array schreiben
+    
+    
+    console.log(dataInArray);
   
 var data = {
-	labels : ["January","February","March","April","May","June","July"],
+	labels : answersInArray,
 	datasets : [
 		{
-			fillColor : "rgba(220,220,220,0.5)",
-			strokeColor : "rgba(220,220,220,1)",
-			data : [65,59,90,81,56,55,40]
+			fillColor : "rgba(236,0,140,0.5)",
+			strokeColor : "rgba(220,220,220,0)",
+			data : dataInArray
 		},
+/*  zweite Serie
 		{
 			fillColor : "rgba(151,187,205,0.5)",
 			strokeColor : "rgba(151,187,205,1)",
 			data : [28,48,40,19,96,27,100]
 		}
+    */
 	]
 };
 
-//BarChart DefaultSettings
-var defaults = {
-				
-	//Boolean - If we show the scale above the chart data			
-	scaleOverlay : false,
-	
-	//Boolean - If we want to override with a hard coded scale
-	scaleOverride : true,
-	
-	//** Required if scaleOverride is true **
-	//Number - The number of steps in a hard coded scale
-	scaleSteps : 10,
-	//Number - The value jump in the hard coded scale
-	scaleStepWidth : 10,
-	//Number - The scale starting value
-	scaleStartValue : 0,
-
-	//String - Colour of the scale line	
-	scaleLineColor : "rgba(0,0,0,.1)",
-	
-	//Number - Pixel width of the scale line	
-	scaleLineWidth : 1,
-
-	//Boolean - Whether to show labels on the scale	
-	scaleShowLabels : true,
-	
-	//Interpolated JS string - can access value
-	scaleLabel : "<%=value%>",
-	
-	//String - Scale label font declaration for the scale label
-	scaleFontFamily : "'Arial'",
-	
-	//Number - Scale label font size in pixels	
-	scaleFontSize : 12,
-	
-	//String - Scale label font weight style	
-	scaleFontStyle : "normal",
-	
-	//String - Scale label font colour	
-	scaleFontColor : "#666",	
-	
-	///Boolean - Whether grid lines are shown across the chart
-	scaleShowGridLines : true,
-	
-	//String - Colour of the grid lines
-	scaleGridLineColor : "rgba(0,0,0,.05)",
-	
-	//Number - Width of the grid lines
-	scaleGridLineWidth : 1,	
-
-	//Boolean - If there is a stroke on each bar	
-	barShowStroke : true,
-	
-	//Number - Pixel width of the bar stroke	
-	barStrokeWidth : 2,
-	
-	//Number - Spacing between each of the X value sets
-	barValueSpacing : 5,
-	
-	//Number - Spacing between data sets within X values
-	barDatasetSpacing : 1,
-	
-	//Boolean - Whether to animate the chart
-	animation : true,
-
-	//Number - Number of animation steps
-	animationSteps : 60,
-	
-	//String - Animation easing effect
-	animationEasing : "easeOutQuart",
-
-	//Function - Fires when the animation is complete
-	onAnimationComplete : null
-	
-};
-
-
-  new Chart(ctx).Bar(data,defaults);
- /* Idee fuer DropDown Button:
-  // Private Modul-Funktion. Da das Modul nur die Constructor-Funktion
-  // "ButtonWidget" an die Außenwelt weitergibt, bleibt die Button-Erstellung
-  // selbst verborgen und privat.
-  var createButton = function(){
-    var button = $('<button/>').attr({
-      type: 'button',
-      class: 'btn btn-default dropdown-toggle',
-      value: 'Change!',
-      "data-toggle": 'dropdown'
-    });
-    var ul = $('<ul/>').attr({
-    class: 'dropdown-menu',
-    role: 'menu'
-    });
-    
-    //var li = '<li><a href="#">AAAA</a></li> <li><a href="#">BBBB</a></li>';
-
-  };
-
-  //Button
-    // Tipp: Variablen mit jQuery-Objekten darin mit $ kennzeichnen
+new ColumnChart(target, data);  
+  
+  
+     // Tipp: Variablen mit jQuery-Objekten darin mit $ kennzeichnen
     var $button = createButton();
 
     // Erzeugten Button in das Ziel-Element einhängen
     $button.appendTo(target);
 
     // Beim Klick auf den Button ein "hallo"-Event triggern
-    //$button.click(function(){
-    //  window.APP.mediator.trigger('hallo');
-    //});
-*/
+    $button.click(function(){
+      window.APP.mediator.trigger('hallo');
+    });
+  
+  
+  }); // Ende Datenanfrage
+  
+  
+
+ 
   
   
   
 
-  };
+  }; // Ende Constructor
 
-});
+}); // Ende Modulf.
