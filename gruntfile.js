@@ -105,8 +105,7 @@ grunt.loadNpmTasks('grunt-contrib');
 
 // Diese Abfolge an Tasks wird bei einem normalen Aufruf von "grunt"
 // abgearbeitet
-grunt.registerTask('default', [ 'jshint', 'jade', 'requirejs', 'clean']);
-
+grunt.registerTask('default', [ 'jshint', 'jade', 'requirejs', 'stylus', 'concat', 'clean']);
 //
 
 };
