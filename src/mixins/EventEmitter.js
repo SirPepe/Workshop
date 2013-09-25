@@ -5,6 +5,14 @@
 // Benutzung: EventEmitter.call(MeinObjConstructor.prototype);
 define(function(){
 
+  "use strict";
+
+  var removeFromArray = function(arr, from, to){
+    var rest = arr.slice((to || from) + 1 || arr.length);
+    arr.length = from < 0 ? arr.length + from : from;
+    return arr.push.apply(arr, rest);
+  };
+
   return function EventEmitter(){
 
     // Enthält Arrays von Callbacks, die auf Events warten
@@ -18,7 +26,10 @@ define(function(){
 
     // Entfernt "callback" für das Event "topic"
     this.off = function(topic, callback){
-      topics[topic].splice(topics[topic].indexOf(callback), 1);
+      var index = topics[topic].indexOf(callback);
+      if(index > -1){
+        removeFromArray(topics[topic], index);
+      }
     };
 
     // Löst alle Callbacks für das Event "topic" aus und übergibt alle weiteren
