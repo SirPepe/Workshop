@@ -27,6 +27,13 @@
     window.APP.mediator.on('q1result', function(val, msg){
       alert(msg + '\n(Code = ' + val + ')');
     });
+
+//Pofalla beendet Target
+    window.APP.mediator.on("pofalla", function listener(){
+       $(target).remove();
+       window.APP.mediator.off("pofalla", listener);
+    });
+
     
   };
 
