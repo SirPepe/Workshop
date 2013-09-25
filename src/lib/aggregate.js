@@ -8,7 +8,7 @@ define(["jquery", "underscore"], function($) {
   function getMetadata() {
     return $.getJSON(apiMetadataPath)
     .done(function(data) {
-      console.log("success: retrieved metadata.");    
+      console.log("success: retrieved metadata.");
     })
     .fail(function(jqxhr, textStatus, error) {
       error.log("error retrieving metadata: " + textStatus + ", " + error);
@@ -37,7 +37,7 @@ define(["jquery", "underscore"], function($) {
 
         //build result
         var result = {};
-        result.answers = meta.answers;
+        result.answers = answers;
         result.title = meta.title;
         result.text = meta.text;
         result.data = {};
