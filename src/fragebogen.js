@@ -6,7 +6,7 @@ require([
   'lib/Mediator',
   'lib/LoadWidget',
   'widgets/VideoWidget/VideoWidget',
-  'widgets/Q1Widget/Q1Widget'
+  'widgets/Q1Widget/Q1Widget',
   'widgets/TextWidget/TextWidget'
 ], function(_require, $, Mediator, loadWidget,
   VideoWidget,
