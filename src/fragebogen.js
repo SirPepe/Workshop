@@ -6,16 +6,17 @@ require([
   'lib/Mediator',
   'lib/LoadWidget',
   'widgets/VideoWidget/VideoWidget',
+  'widgets/Q1Widget/Q1Widget'
   'widgets/TextWidget/TextWidget'
 ], function(_require, $, Mediator, loadWidget,
   VideoWidget,
+  Q1Widget,
   TextWidget
 ){
-
   'use strict';
   
   var pages = {
-    seite1: [VideoWidget],
+    seite1: [Q1Widget, VideoWidget],
     seite2: [TextWidget]
   };
   
