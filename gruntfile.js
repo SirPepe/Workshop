@@ -94,6 +94,19 @@ grunt.initConfig({
       dest: 'app/main.css'
     },
   },
+  
+  copy: {
+    dist: {
+      files: 
+          [{
+          src: 'src/widgets/**/*.mp4' ,
+          dest: 'app/',
+          expand: true,
+          flatten: true,
+          filter: 'isFile'
+          }]
+      }
+    },
 
   clean: ['src/widgets/**/*.html', 'src/widgets/**/*.css']
 
@@ -105,7 +118,7 @@ grunt.loadNpmTasks('grunt-contrib');
 
 // Diese Abfolge an Tasks wird bei einem normalen Aufruf von "grunt"
 // abgearbeitet
-grunt.registerTask('default', [ 'jshint', 'jade', 'requirejs', 'stylus', 'concat', 'clean']);
+grunt.registerTask('default', [ 'jshint', 'jade', 'requirejs', 'stylus', 'concat', 'copy', 'clean']);
 //
 
 };
