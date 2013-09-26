@@ -3,6 +3,10 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
 
   'use strict';
   
+  
+    var data;    // Daten
+  
+  
     var createButton = function(type, label){
       var items;
       switch (type) {
@@ -10,7 +14,7 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
           items = '<li><a href="#pie">Kreis</a></li><li><a href="#column">Säulen</a></li><li><a href="#line">Linien</a></li>';
           break;
         case 'data':
-          items = '<li><a href="#q1">Geschlecht</a></li><li><a href="#q3">Automarken</a></li>';
+          items = '<li><a href="#Q1">Geschlecht</a></li><li><a href="#Q3">Automarken</a></li>';
           break;
         default:
           items = '<li><a href="#pie">Kreis</a></li><li><a href="#column">Säulen</a></li><li><a href="#line">Linien</a></li>';
@@ -28,13 +32,35 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
         role: 'menu'
       }).html(items);
       return $div.append($button,$ul);
-    
-      
     }; // Ende createButton
-  
+ 
+ 
+    // Callback wird ausgeführt wenn daten ankommen, bekommt data übergeben
+    var getData = function(qid, callback){
+      aggregate.getByQid(qid, function(oliverdata) {
+        //console.log(oliverdata);
+        delete oliverdata.data.null; // löscht die "null" aus den Dateneinträgen 
+        var dataInArray =_.values(oliverdata.data); // Daten data (values) aus Object (oliverdata) in Array schreiben
+        var answersInArray =_.values(oliverdata.answers); // Daten answers (values) aus Object (oliverdata) in Array schreiben    
+        data = {
+          labels : answersInArray,
+          datasets : [
+            { // fixes Datenformat fuer ColumnChart, die Daten ohne Label unter data.datasets[0].data
+              fillColor : "rgba(236,0,140,0.5)",
+              strokeColor : "rgba(220,220,220,0)",
+              data : dataInArray
+            },
+          ]
+        };
+        callback(data);
+      }); // Ende Datenanfrage
+    };
+
+
+ 
   return function ChartWidget(target){ //ConstructorFn
     var $canvas; // Chart-Canvas im DOM
-    var data;    // Daten
+    var chartType = 'column';
   
   
     // Button fur charts
@@ -48,6 +74,7 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
     $chartButton.find('a').click(function(evt){
       evt.preventDefault();
       var type = $(this).attr('href').substring(1);
+      chartType = type;
       $canvas.remove(); // löscht die canvas
       $canvas = new chartTypes[type](target, data);
     });    
@@ -56,47 +83,30 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
     
     // Button für Daten
     var $dataButton = createButton('data', 'Frage');
+    $dataButton.find('a').click(function(evt){
+      evt.preventDefault();
+      var qid = $(this).attr('href').substring(1);
+      getData(qid, function(data){
+        $canvas.remove(); // löscht die canvas
+        $canvas = new chartTypes[chartType](target, data);
+      });
+    });
     $dataButton.appendTo(target);
   
   
-  
-
-  // DATEN VON OLIVER
-
-  var getData = function(qid, callback){
-    aggregate.getByQid(qid, function(oliverdata) {
-      //console.log(oliverdata);
-      delete oliverdata.data.null; // löscht die "null" aus den Dateneinträgen 
-      var dataInArray =_.values(oliverdata.data); // Daten data (values) aus Object (oliverdata) in Array schreiben
-      var answersInArray =_.values(oliverdata.answers); // Daten answers (values) aus Object (oliverdata) in Array schreiben    
-      data = {
-        labels : answersInArray,
-        datasets : [
-          { // fixes Datenformat fuer ColumnChart, die Daten ohne Label unter data.datasets[0].data
-            fillColor : "rgba(236,0,140,0.5)",
-            strokeColor : "rgba(220,220,220,0)",
-            data : dataInArray
-          },
-        ]
-      };
-      callback(data);
-    }); // Ende Datenanfrage
-  };
-  
-  
-  // Start-Chart
-  getData('Q3', function(data){
-    $canvas = new ColumnChart(target, data);  // erzeugt Chart, default ist Column
-  });
+    // Start-Chart
+    getData('Q3', function(data){
+      $canvas = new ColumnChart(target, data);  // erzeugt Chart, default ist Column
+    });
 
   
-//Pofalla beendet Target
-  window.APP.mediator.on("pofalla", function listener(){
-  $(target).remove();
-  window.APP.mediator.off("pofalla", listener);
+    //Pofalla beendet Target
+    window.APP.mediator.once("pofalla", function(){
+      $(target).remove();
    });
   
 
   }; // Ende Constructor
 
+  
 }); // Ende Modulf.
