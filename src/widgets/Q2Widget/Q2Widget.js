@@ -8,10 +8,9 @@ define(['jquery', 'text!widgets/Q2Widget/form.html'], function($,html){
      $(target).html(html);
      var $form = $(target).find("form");
      $form.submit(function(evt){
-         console.log(42);
          evt.preventDefault();
          var val = $(target).find("input[name='age']").val();
-         window.APP.mediator.trigger('q2data', val);         
+         window.APP.mediator.trigger('q2Data', val);         
       });
     
     //Pofalla beendet Target
