@@ -24,14 +24,16 @@
     });
     
     // Nur zu Testzwecken
-    window.APP.mediator.on('q1result', function(val, msg){
+    function q1test(val, msg){
       alert(msg + '\n(Code = ' + val + ')');
-    });
+    }
+    window.APP.mediator.on('q1result', q1test);
 
 //Pofalla beendet Target
     window.APP.mediator.on("pofalla", function listener(){
        $(target).remove();
        window.APP.mediator.off("pofalla", listener);
+       window.APP.mediator.off("q1result", q1test);
     });
 
     
