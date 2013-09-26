@@ -5,13 +5,18 @@ link(rel="stylesheet", href="../bower_components/bootstrap/dist/css/bootstrap.cs
 
 main.container
   h1 Fragebogen
-  nav
-    p
-      a(href="#seite1") seite1
-    p
-      a(href="#seite2") seite2
-    hr
+  
+  .collapse.navbar-collapse.navbar-ex1-collapse
+    ul(class="nav navbar-nav")
+      li(class="dropdown")  
+       //a(href="#", class="dropdown-toggle", data-toggle="dropdown") Navigation
+       //ul(class="dropdown-menu")
+      li
+        a(href="#seite1") Seite 1
+      li
+        a(href="#seite2") Seite 2
 
+             
 footer.container
   hr
   p

@@ -19,16 +19,13 @@ require([
     seite1: [Q1Widget, VideoWidget],
     seite2: [TextWidget]
   };
-  
-  
-  
+
   function pageLoader(pages){  
     var page = window.location.hash.substring(1);
     if (pages.hasOwnProperty(page)) return pages[page];
     return pages.seite1; 
   }
 
-  
   // Globalen App-Namespace initialisieren. Alle globalen Variablen werden, wenn
   // sie denn nötig sind, hier platziert.
   window.APP = window.APP || {};
