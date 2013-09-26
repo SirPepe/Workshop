@@ -7,17 +7,20 @@ require([
   'lib/LoadWidget',
   'widgets/VideoWidget/VideoWidget',
   'widgets/Q1Widget/Q1Widget',
+  'widgets/Q2Widget/Q2Widget',
   'widgets/TextWidget/TextWidget'
 ], function(_require, $, Mediator, loadWidget,
   VideoWidget,
   Q1Widget,
+  Q2Widget,
   TextWidget
 ){
   'use strict';
   
   var pages = {
     seite1: [Q1Widget],
-    seite2: [VideoWidget]
+    seite2: [VideoWidget],
+    SuperSeiteBlaBlaBla: [Q2Widget]
   };
 
   function pageLoader(pages){  
