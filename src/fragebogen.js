@@ -6,15 +6,18 @@ require([
   'lib/Mediator',
   'lib/LoadWidget',
   'widgets/Q1Widget/Q1Widget',
+  'widgets/Q3Widget/Q3Widget',
   'widgets/Q5Widget/Q5Widget'
 ], function(_require, $, Mediator, loadWidget,
   Q1Widget,
+  Q3Widget,
   Q5Widget
 ){
   'use strict';
   
   var pages = {
     q1: [Q1Widget],
+    q3: [Q3Widget],
     q5: [Q5Widget]
   };
 
