@@ -5,25 +5,23 @@ require([
   'jquery',
   'lib/Mediator',
   'lib/LoadWidget',
-  'widgets/VideoWidget/VideoWidget',
   'widgets/Q1Widget/Q1Widget',
-  'widgets/TextWidget/TextWidget'
+  'widgets/Q5Widget/Q5Widget'
 ], function(_require, $, Mediator, loadWidget,
-  VideoWidget,
   Q1Widget,
-  TextWidget
+  Q5Widget
 ){
   'use strict';
   
   var pages = {
-    seite1: [Q1Widget],
-    seite2: [VideoWidget]
+    q1: [Q1Widget],
+    q5: [Q5Widget]
   };
 
   function pageLoader(pages){  
     var page = window.location.hash.substring(1);
     if (pages.hasOwnProperty(page)) return pages[page];
-    return pages.seite1; 
+    return pages.q1; 
   }
 
   // Globalen App-Namespace initialisieren. Alle globalen Variablen werden, wenn
@@ -39,16 +37,6 @@ require([
   
   // Footer-Element für next button
   $footer = $('footer');
-  
-  // Next Button
-   var createButton = function(){
-    return $('<input/>').attr({
-      type: 'button',
-      class: 'btn btn-primary clearfix',
-    });};
-    
-  var $nextbutton=createButton();
-  $nextbutton.addClass('next').val('NEXT');
  
   // Jedes Widget ist ein Mini-Programm und muss einzeln initialisiert werden
   var loadWidgetsInMain = loadWidget.bind(null, $main);
@@ -57,21 +45,41 @@ require([
   var init = function(){
     window.APP.mediator.trigger('pofalla');
     pageLoader(pages).forEach(loadWidgetsInMain);
-    $nextbutton.prependTo($footer);
   };
   $(window).on('hashchange', init);
   $(document).ready(init); 
   
-  $nextbutton.click(function(){
-    var keys = Object.keys(pages);
-    var index = keys.indexOf(window.location.hash.substring(1));
-    var next = keys[index + 1];
+  
+  var pageNames = Object.keys(pages);
+  var goToPage = function(idx){
+    var next = pageNames[idx];
     if(typeof next !== 'undefined'){
       window.location.hash='#' + next;
     }
     else {
       alert('Danke für das Ausfüllen');
+      // Gesammelte Daten versenden
     }
+  };
+  
+  
+  // Gesammelte Daten des Befragten
+  var data = {};
+  //var ID = function () {
+  //  return Math.random().toString(10).substr(1, 8);
+  //};
+  //alert(ID);
+  
+  pageNames.map(function(name){
+    return name + 'Data';
+  }).forEach(function(event, idx){
+    window.APP.mediator.on(event, function(result){
+      console.log('Event ' + event + ' (' + JSON.stringify(result) + ')');
+      var qid = event;
+      data[qid] = result;
+      console.log(data);
+      goToPage(idx + 1);
+    });
   });
 
 });
