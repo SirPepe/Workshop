@@ -90,10 +90,9 @@ define(['jquery','text!widgets/VideoWidget/video.html'], function($,html){
     });
 
 
-    window.APP.mediator.on("pofalla", function listener(){
+   window.APP.mediator.once("pofalla", function(){
       $(target).remove();
-      window.APP.mediator.off('pofalla', listener);
-    });
+   });
 
 
 
