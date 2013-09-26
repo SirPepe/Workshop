@@ -1,5 +1,5 @@
 // Ein zweites Beispiel-Modul mit jQuery als Dependency
-define(['jquery'], function($){
+define(['jquery', 'text!widgets/VideoWidget/video.html'], function($,html){
 
   'use strict';
 
@@ -15,6 +15,20 @@ define(['jquery'], function($){
 
   // Die übliche Modul-Constructor-Funktion
   return function VideoWidget (target){
+
+    $(target).html(html);
+    $(target).find('.greenlike').css({
+      'background-color':'green',
+      'min-width':'350px',
+      'max-width':'350px',
+      'float':'left'
+    });
+    $(target).find('.reddislike').css({
+      'background-color':'red',
+      'min-width':'350px',
+      'max-width':'350px',
+      'float':'left'
+    });
   //Zeit der clicks holen
      var getVideoTime = function(){
        var $mediaElement = $(target).find('video');
@@ -42,21 +56,7 @@ define(['jquery'], function($){
      };
 
 
-  $(target).html('<div class="videoPlayer"><video controls autoplay><source src="Ad1_Kia_Sportage.webm"><source src="Ad1_Kia_Sportage.mp4">Your browser does not support the <code>video</code> element</video></div><canvas id="canvas"></canvas><div class="snapshotcontainer"></div>');
-    $(target).find('.snapshotcontainer').append("<div class='greenlike'></div>");
-    $(target).find('.snapshotcontainer').append("<div class='reddislike'></div>");
-    $(target).find('.greenlike').css({
-      'background-color':'green',
-      'min-width':'350px',
-      'max-width':'350px',
-      'float':'left'
-    });
-    $(target).find('.reddislike').css({
-      'background-color':'red',
-      'min-width':'350px',
-      'max-width':'350px',
-      'float':'left'
-    });
+    
     // Tipp: Variablen mit jQuery-Objekten darin mit $ kennzeichnen
     var $v1 = $(target).find('video');
     var v1 = $(target).find('video').get(0);
