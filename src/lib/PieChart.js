@@ -15,7 +15,6 @@ define(['jquery', 'chart','underscore'], function($){
     var $canvas = createCanvas();
     $(target).append($canvas);
     var ctx = $canvas.get(0).getContext("2d");
-    console.log(data);
     
     //PieChart DefaultSettings
 var defaults = {
@@ -55,8 +54,8 @@ var defaults = {
       color: "hsl(" + 360/data.datasets[0].data.length*idx + ",100%,50%)"
     };
   });
-  console.log(pieData);
   new Chart(ctx).Pie(pieData,defaults); // Chart zeichnen
+  return $canvas; // gibt $canvas zurueck damit es bei Chartwechsel geloescht werden kann
   
   };
   

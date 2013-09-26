@@ -15,7 +15,6 @@ define(['jquery', 'chart','underscore'], function($){
     var $canvas = createCanvas();
     $(target).append($canvas);
     var ctx = $canvas.get(0).getContext("2d");
-    console.log(data);
     
     //ColumnChart DefaultSettings
 var defaults = {
@@ -95,6 +94,7 @@ var defaults = {
 
 
   new Chart(ctx).Bar(data,defaults); // Chart zeichnen
+  return $canvas; // gibt $canvas zurueck damit es bei Chartwechsel geloescht werden kann
   
   };
   

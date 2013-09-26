@@ -3,5 +3,6 @@ module.exports.paths = {
           jquery: '../bower_components/jquery/jquery',
           chart: '../bower_components/nnnick-chartjs/Chart.min',
           text: '../bower_components/requirejs-text/text',
-          underscore: '../bower_components/underscore/underscore'
+          underscore: '../bower_components/underscore/underscore',
+          bootstrapDropdown: '../bower_components/bootstrap/js/dropdown'
         };
