@@ -3,21 +3,34 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
 
   'use strict';
   
-    var createButton = function(){
-    var $div = $('<div/>').attr({
-    class: 'btn-group'
-    });
-    var $button = $('<button/>').attr({
-      type: 'button',
-      class: 'btn btn-default dropdown-toggle',
-      "data-toggle": 'dropdown',
-    }).html('Charttyp <span class="caret"></span>');
-    var $ul = $('<ul/>').attr({
-    class: 'dropdown-menu',
-    role: 'menu'
-    }).html('<li><a href="#pie">Kreis</a></li><li><a href="#column">Säulen</a></li><li><a href="#line">Linien</a></li>');
-    return $div.append($button,$ul);
-  }; // Ende createButton
+    var createButton = function(type){
+      var items;
+      switch (type) {
+        case 'chart':
+          items = '<li><a href="#pie">Kreis</a></li><li><a href="#column">Säulen</a></li><li><a href="#line">Linien</a></li>';
+          break;
+        case 'data':
+          items = '<li><a href="#pie">Kreis</a></li><li><a href="#column">Säulen</a></li><li><a href="#line">Linien</a></li>';
+          break;
+        default:
+          items = '<li><a href="#pie">Kreis</a></li><li><a href="#column">Säulen</a></li><li><a href="#line">Linien</a></li>';
+      }
+      var $div = $('<div/>').attr({
+        class: 'btn-group'
+      });
+      var $button = $('<button/>').attr({
+        type: 'button',
+        class: 'btn btn-info dropdown-toggle', // btn-... default=weiss, success=gruen info=hellblau
+        "data-toggle": 'dropdown',
+      }).html('Charttyp <span class="caret"></span>');
+      var $ul = $('<ul/>').attr({
+        class: 'dropdown-menu',
+        role: 'menu'
+      }).html(items);
+      return $div.append($button,$ul);
+    
+      
+    }; // Ende createButton
   
   return function ChartWidget(target){ //ConstructorFn
 
@@ -51,27 +64,21 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
     var $canvas = new ColumnChart(target, data);  // erzeugt Chart, default ist Column
   
   
-     // Tipp: Variablen mit jQuery-Objekten darin mit $ kennzeichnen
-    var $button = createButton();
-    
-    $linkPie = $button.find('a[href="#pie"]').click(function(evt){ // Chart-Type-Auswahl, evt-objekt für "click" um auf der Seite zu bleiben, sonst gibt's #pie.html
+    // Button fur charts
+    // Tipp: Variablen mit jQuery-Objekten darin mit $ kennzeichnen
+    var $chartButton = createButton('chart');
+    var chartTypes = {
+      pie: PieChart,
+      line: LineChart,
+      column: ColumnChart
+    };
+    $chartButton.find('a').click(function(evt){
       evt.preventDefault();
+      var type = $(this).attr('href').substring(1);
       $canvas.remove(); // löscht die canvas
-      $canvas = new PieChart(target, data);
-    });
-    $linkColumn = $button.find('a[href="#column"]').click(function(evt){
-      evt.preventDefault();
-      $canvas.remove();
-      $canvas = new ColumnChart(target, data);
-    });
-    $linkLine = $button.find('a[href="#line"]').click(function(evt){
-      evt.preventDefault();
-      $canvas.remove();
-      $canvas = new LineChart(target, data);
-    });
-    
-    // Erzeugten Button in das Ziel-Element einhängen
-    $button.appendTo(target);
+      $canvas = new chartTypes[type](target, data);
+    });    
+    $chartButton.appendTo(target); // Erzeugten Button in das Ziel-Element einhängen
 
 
   
