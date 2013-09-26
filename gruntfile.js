@@ -104,6 +104,13 @@ grunt.initConfig({
           expand: true,
           flatten: true,
           filter: 'isFile'
+          },
+          {
+          src: 'src/widgets/**/*.webm' ,
+          dest: 'app/',
+          expand: true,
+          flatten: true,
+          filter: 'isFile'
           }]
       }
     },
