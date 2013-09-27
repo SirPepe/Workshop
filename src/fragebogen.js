@@ -8,7 +8,7 @@ require([
   'widgets/Q1Widget/Q1Widget',
   'widgets/Q2Widget/Q2Widget',
   'widgets/Q3Widget/Q3Widget',
-  'widgets/Q3Widget/Q5Widget'
+  'widgets/Q5Widget/Q5Widget'
 ], function(_require, $, Mediator, loadWidget,
   Q1Widget,
   Q2Widget,
