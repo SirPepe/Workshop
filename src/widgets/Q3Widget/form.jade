@@ -1,15 +1,24 @@
 ﻿form
   .form-group
-    | What is your gender: 
+    | Q3
     br
-    | are you...
-    .checkbox
-       label
-         input(type="radio", name="gender", value="1")
-         | &nbsp; male
-    .checkbox
-       label
-         input(type="radio", name="gender", value="2")
-         | &nbsp; female
-    input(type="submit", class="btn btn-default", id="Sendbutton", name="Send", value="Send")
-   
+    | Wie oft benutzen Sie Internet mit : 
+  table.gridform
+    tr
+      td &nbsp;
+      td nie oder praktisch nie
+      td 1-3 mal pro Jahr
+      td 1-3 mal pro Monat
+      td 1-3 mal pro Woche
+      td Täglich
+      td Mehrmals Täglich
+
+    each val, index in ['Desktop', 'Laptop', 'iPad oder Tablett', 'Smartfon', 'Handy']
+      tr
+         td= ' - ' + val
+         each num in [1, 2, 3, 4, 5, 6]
+            td 
+               input(type="radio", value=num, name="Radio" + (index+1))
+    
+    
+  input(type="submit", class="btn btn-default", id="Sendbutton", name="Send", value="Send")

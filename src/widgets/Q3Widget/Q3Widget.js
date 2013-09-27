@@ -7,7 +7,13 @@
      var $form = $(target).find("form");
      $form.submit(function(evt){
          evt.preventDefault();
-         window.APP.mediator.trigger('q3result', null);
+         var val={};
+         $(target).find("input[type=radio]:checked").each(function(idx,input){
+            var name = $(input).attr("name").replace('Radio','Q3_');
+            var value = $(input).val();
+            val[name]=value;
+         });
+         window.APP.mediator.trigger('q3Data', val);
     });
 
     //Pofalla beendet Target
