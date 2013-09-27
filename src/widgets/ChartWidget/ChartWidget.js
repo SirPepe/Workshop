@@ -46,10 +46,8 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
         data = {
           qText: oliverdata.text, //Fragetext - wird in die headline übergeben
           labels : answersInArray,
-          datasets : [
-            { // fixes Datenformat fuer ColumnChart, die Daten ohne Label unter data.datasets[0].data
-              fillColor : "rgba(236,0,140,0.5)",
-              strokeColor : "rgba(220,220,220,0)",
+          datasets : [ // Array mit Objekt als Inhalt
+            {
               data : dataInArray
             },
           ]

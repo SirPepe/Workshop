@@ -101,6 +101,11 @@ var defaults = {
 	
 };
 
+  // Farb-Settings innerhalb Data structure des Charts
+  data.datasets[0].fillColor = "rgba(115,115,115,0.25)";
+  data.datasets[0].strokeColor = "rgba(122,34,128,1)";
+  data.datasets[0].pointColor = "rgba(76,29,82,1)";
+  data.datasets[0].pointstrokeColor = "rgba(122,34,128,1)";
 
   new Chart(ctx).Line(data,defaults); // Chart zeichnen
   return $canvas; // gibt $canvas zurueck damit es bei Chartwechsel geloescht werden kann

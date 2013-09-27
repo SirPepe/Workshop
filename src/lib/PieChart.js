@@ -48,7 +48,7 @@ var defaults = {
 	
 };
 
-  var pieData = data.datasets[0].data.map(function(value, idx){
+  var pieData = data.datasets[0].data.map(function(value, idx){ // Datentransformation für PieChart: erstes Objekt[0] aus data.datasets, idx gibt Anzahlder Elemente zürück - für die Farberzeugung
     return {
       value: value,
       color: "hsl(" + 360/data.datasets[0].data.length*idx + ",100%,50%)"

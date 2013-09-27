@@ -91,6 +91,10 @@ var defaults = {
 	onAnimationComplete : null
 	
 };
+  
+  // Farb-Settings innerhalb Data structure des Charts
+  data.datasets[0].fillColor = "rgba(236,0,140,0.7)";
+  data.datasets[0].strokeColor = "rgba(220,220,220,0)";
 
 
   new Chart(ctx).Bar(data,defaults); // Chart zeichnen
