@@ -63,7 +63,7 @@ require([
       window.location.hash='#' + next;
     }
     else {
-      alert('Danke für das Ausfüllen');
+      console.log('Danke für das Ausfüllen');
       // Gesammelte Daten versenden
     }
   };
