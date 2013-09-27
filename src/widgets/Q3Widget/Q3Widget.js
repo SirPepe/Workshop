@@ -13,7 +13,7 @@
             var value = $(input).val();
             val[name]=value;
          });
-         window.APP.mediator.trigger('q3Data', val);
+         window.APP.mediator.trigger('q3Data', JSON.stringify(val));
     });
 
     //Pofalla beendet Target
