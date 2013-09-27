@@ -6,10 +6,12 @@ require([
   'lib/Mediator',
   'lib/LoadWidget',
   'widgets/Q1Widget/Q1Widget',
+  'widgets/Q2Widget/Q2Widget',
   'widgets/Q3Widget/Q3Widget',
   'widgets/Q5Widget/Q5Widget'
 ], function(_require, $, Mediator, loadWidget,
   Q1Widget,
+  Q2Widget,
   Q3Widget,
   Q5Widget
 ){
@@ -17,6 +19,7 @@ require([
   
   var pages = {
     q1: [Q1Widget],
+    q2: [Q2Widget],
     q3: [Q3Widget],
     q5: [Q5Widget]
   };
@@ -60,7 +63,7 @@ require([
       window.location.hash='#' + next;
     }
     else {
-      alert('Danke für das Ausfüllen');
+      console.log('Danke für das Ausfüllen');
       // Gesammelte Daten versenden
     }
   };

@@ -20,11 +20,12 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
           items = '<li><a href="#pie">Kreis</a></li><li><a href="#column">Säulen</a></li><li><a href="#line">Linien</a></li>';
       }
       var $div = $('<div/>').attr({
-        class: 'btn-group'
+        class: 'btn-group',
+        style: 'padding-right: 50px;'
       });
       var $button = $('<button/>').attr({
         type: 'button',
-        class: 'btn btn-info dropdown-toggle', // btn-... default=weiss, success=gruen info=hellblau
+        class: 'btn btn-success dropdown-toggle', // btn-xxx default=weiss, success=gruen info=hellblau
         "data-toggle": 'dropdown',
       }).html(label + ' <span class="caret"></span>');
       var $ul = $('<ul/>').attr({
@@ -35,14 +36,15 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
     }; // Ende createButton
  
  
-    // Callback wird ausgeführt wenn daten ankommen, bekommt data übergeben
+    // Datenimport - Callback wird ausgeführt wenn daten ankommen, bekommt data übergeben
     var getData = function(qid, callback){
       aggregate.getByQid(qid, function(oliverdata) {
-        //console.log(oliverdata);
+        console.log(oliverdata);
         delete oliverdata.data.null; // löscht die "null" aus den Dateneinträgen 
         var dataInArray =_.values(oliverdata.data); // Daten data (values) aus Object (oliverdata) in Array schreiben
         var answersInArray =_.values(oliverdata.answers); // Daten answers (values) aus Object (oliverdata) in Array schreiben    
         data = {
+          qText: oliverdata.text, //Fragetext - wird in die headline übergeben
           labels : answersInArray,
           datasets : [
             { // fixes Datenformat fuer ColumnChart, die Daten ohne Label unter data.datasets[0].data
@@ -62,6 +64,11 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
     var $canvas; // Chart-Canvas im DOM
     var chartType = 'column';
   
+    //headline erstellen und updateheadline, text ist Fragetext
+    var $headline = $('<h3>').text('Lade Daten...');
+    var updateHeadline = function(content){
+      $headline.text(content);
+    };
   
     // Button fur charts
     // Tipp: Variablen mit jQuery-Objekten darin mit $ kennzeichnen
@@ -81,7 +88,7 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
     $chartButton.appendTo(target); // Erzeugten Button in das Ziel-Element einhängen
     
     
-    // Button für Daten
+    // Button für Daten     
     var $dataButton = createButton('data', 'Frage');
     $dataButton.find('a').click(function(evt){
       evt.preventDefault();
@@ -89,14 +96,17 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
       getData(qid, function(data){
         $canvas.remove(); // löscht die canvas
         $canvas = new chartTypes[chartType](target, data);
+        updateHeadline(data.qText); // text ist Frage
       });
     });
     $dataButton.appendTo(target);
+    
+    $headline.appendTo(target); // Headline in Target einhaengen
   
-  
-    // Start-Chart
+    // Start-Chart: Default
     getData('Q3', function(data){
-      $canvas = new ColumnChart(target, data);  // erzeugt Chart, default ist Column
+      $canvas = new ColumnChart(target, data);  // erzeugt Chart, default ist Column->Q3
+      updateHeadline(data.qText); // text ist Frage
     });
 
   

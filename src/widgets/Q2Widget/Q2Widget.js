@@ -10,16 +10,12 @@ define(['jquery', 'text!widgets/Q2Widget/form.html'], function($,html){
      $form.submit(function(evt){
          evt.preventDefault();
          var val = $(target).find("input[name='age']").val();
-         window.APP.mediator.trigger('q2result', val);
-    });
+         window.APP.mediator.trigger('q2Data', val);         
+      });
     
-     window.APP.mediator.on('q2data');
-
-//Pofalla beendet Target
-    window.APP.mediator.on("pofalla", function listener(){
+    //Pofalla beendet Target
+    window.APP.mediator.once("pofalla", function(){
        $(target).remove();
-       window.APP.mediator.off("pofalla", listener);
-       window.APP.mediator.off("q2data");
     });
   };
 });
