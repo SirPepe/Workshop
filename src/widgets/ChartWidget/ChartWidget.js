@@ -39,7 +39,7 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
     // Datenimport - Callback wird ausgeführt wenn daten ankommen, bekommt data übergeben
     var getData = function(qid, callback){
       aggregate.getByQid(qid, function(oliverdata) {
-        console.log(oliverdata);
+        //console.log(oliverdata);
         delete oliverdata.data.null; // löscht die "null" aus den Dateneinträgen 
         var dataInArray =_.values(oliverdata.data); // Daten data (values) aus Object (oliverdata) in Array schreiben
         var answersInArray =_.values(oliverdata.answers); // Daten answers (values) aus Object (oliverdata) in Array schreiben    
@@ -92,7 +92,7 @@ define(['jquery', 'chart', 'lib/aggregate', 'lib/ColumnChart', 'lib/LineChart', 
       evt.preventDefault();
       var qid = $(this).attr('href').substring(1);
       getData(qid, function(data){
-        $canvas.remove(); // löscht die canvas
+        $canvas.remove(); // löscht die $canvas
         $canvas = new chartTypes[chartType](target, data);
         updateHeadline(data.qText); // text ist Frage
       });
