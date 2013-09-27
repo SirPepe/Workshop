@@ -7,11 +7,19 @@
      var $form = $(target).find("form");
      $form.submit(function(evt){
          evt.preventDefault();
-         var val={};
-         $(target).find("input[type=radio]:checked").each(function(idx,input){
-            var name = $(input).attr("name").replace('Radio','Q3_');
-            var value = $(input).val();
-            val[name]=value;
+         var val = [];
+         var $trs = $(target).find('tr').each(function(trIdx, tr){
+            var $inputs = $(tr).find('input[type=radio]');
+            console.log($inputs);
+            if($inputs.length > 0){
+              var value = null;
+              $inputs.each(function(inputIdx, input){
+                if($(input).prop('checked')){
+                  value = this.value;
+                }
+              });
+              val.push(value);
+            }
          });
          window.APP.mediator.trigger('q3Data', JSON.stringify(val));
     });
