@@ -7,7 +7,7 @@
      var $form = $(target).find("form");
      $form.submit(function(evt){
          evt.preventDefault();
-         window.APP.mediator.trigger('q3result', null);
+         window.APP.mediator.trigger('q3Data', null);
     });
 
     //Pofalla beendet Target
