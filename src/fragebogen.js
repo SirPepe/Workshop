@@ -7,21 +7,18 @@ require([
   'lib/LoadWidget',
   'widgets/Q1Widget/Q1Widget',
   'widgets/Q2Widget/Q2Widget',
-  'widgets/Q3Widget/Q3Widget',
-  'widgets/Q5Widget/Q5Widget'
+  'widgets/Q3Widget/Q3Widget'
 ], function(_require, $, Mediator, loadWidget,
   Q1Widget,
   Q2Widget,
-  Q3Widget,
-  Q5Widget
+  Q3Widget
 ){
   'use strict';
   
   var pages = {
     q1: [Q1Widget],
     q2: [Q2Widget],
-    q3: [Q3Widget],
-    q5: [Q5Widget]
+    q3: [Q3Widget]
   };
 
   function pageLoader(pages){  
@@ -64,26 +61,42 @@ require([
     }
     else {
       console.log('Danke für das Ausfüllen');
+
+      // data transformieren
+      var dataTransformed = {};
+      Object.keys(data).forEach(function(key){
+        var newKey = key.replace('Data','');
+        newKey = newKey.charAt(0).toUpperCase() + newKey.slice(1);
+        dataTransformed[newKey] = data[key];
+      });
+      dataTransformed.status = 'complete';
+      
       // Gesammelte Daten versenden
+      console.log('Data transformed:', dataTransformed);
+      $.post('http://tsmmhwbi807/workshop/api/data', dataTransformed)
+        .done(function(){
+          console.log('Daten geschrieben');
+        })
+        .fail(function(){
+          console.error('Problem beim Speichern');
+          console.error.apply(console, arguments);
+        });
     }
   };
   
   
   // Gesammelte Daten des Befragten
   var data = {};
-  //var ID = function () {
-  //  return Math.random().toString(10).substr(1, 8);
-  //};
-  //alert(ID);
+
   
   pageNames.map(function(name){
     return name + 'Data';
   }).forEach(function(event, idx){
     window.APP.mediator.on(event, function(result){
-      console.log('Event ' + event + ' (' + JSON.stringify(result) + ')');
       var qid = event;
       data[qid] = result;
       console.log(data);
+      console.log(result.length);
       goToPage(idx + 1);
     });
   });
