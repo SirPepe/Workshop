@@ -21,7 +21,7 @@ require([
     q1: [Q1Widget],
     q2: [Q2Widget],
     q3: [Q3Widget],
-    q5: [Q3Widget]
+    q5: [Q5Widget]
   };
 
   function pageLoader(pages){  
