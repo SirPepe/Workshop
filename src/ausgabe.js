@@ -5,18 +5,15 @@ require([
   'jquery',
   'lib/Mediator',
   'lib/LoadWidget',
-  'widgets/ChartWidget/ChartWidget',
-  'widgets/TextWidget/TextWidget'
+  'widgets/ChartWidget/ChartWidget' 
 ], function(_require, $, Mediator, loadWidget,
-  ChartWidget,
-  TextWidget
+  ChartWidget
 ){
 
   'use strict';
   
   var pages = {
-    seite1: [ChartWidget],
-    seite2: [TextWidget]
+    seite1: [ChartWidget]
   };
   
   
