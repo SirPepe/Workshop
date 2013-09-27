@@ -4,6 +4,7 @@ table.gridform {
    border-style:solid;
    border-color:#AAA;
    padding:10px;
+   margin: 20px;
 }
 
 table.gridform tr:nth-child(odd) td{
@@ -11,12 +12,31 @@ table.gridform tr:nth-child(odd) td{
 }
 
 table.gridform tr:nth-child(even) td{
-    background-color:#AAA;
+    background-color:#DDD;
+    font-size:1em
 }
 
-table.gridform td{
+table.gridform tr:nth-child(1) td{
+   vertical-align:top;
+    font-size:0.9em
+}
+
+table.gridform td:nth-child(1){
    border-width:1px;
    border-style:solid;
    border-color:#AAA;
+   width:28%;
+   text-align:left;
+   vertical-align:middle;
+   padding-left: 20px;
 }
+
+for numb in 2 3 4 5 6 7
+    td:nth-child({numb})
+      border-width:1px;
+      border-style:solid;
+      border-color:#AAA;
+      width:12%;
+      text-align:center;
+      vertical-align:middle;
 
