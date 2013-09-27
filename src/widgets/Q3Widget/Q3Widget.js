@@ -10,7 +10,6 @@
          var val = [];
          var $trs = $(target).find('tr').each(function(trIdx, tr){
             var $inputs = $(tr).find('input[type=radio]');
-            console.log($inputs);
             if($inputs.length > 0){
               var value = null;
               $inputs.each(function(inputIdx, input){
